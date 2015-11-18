@@ -12,12 +12,6 @@
  *******************************************************************************/
 package org.cloudfoundry.identity.uaa.oauth.token;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -35,9 +29,19 @@ import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.util.Assert;
 
-@JsonSerialize(using = OpenIdToken.OpenIdTokenJackson1Serializer.class)
-@JsonDeserialize(using = OpenIdToken.OpenIdTokenJackson1Deserializer.class)
-public class OpenIdToken extends DefaultOAuth2AccessToken {
+import java.io.IOException;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Token object that holds several related jwt tokens at once.
+ * Access token, refresh token, id_token as well as expires_in and the list of scopes.
+ */
+@JsonSerialize(using = CompositeAccessToken.OpenIdTokenJackson1Serializer.class)
+@JsonDeserialize(using = CompositeAccessToken.OpenIdTokenJackson1Deserializer.class)
+public class CompositeAccessToken extends DefaultOAuth2AccessToken {
 
     public static String ID_TOKEN = "id_token";
 
@@ -51,11 +55,11 @@ public class OpenIdToken extends DefaultOAuth2AccessToken {
 
     private String idTokenValue;
 
-    public OpenIdToken(String accessTokenValue) {
+    public CompositeAccessToken(String accessTokenValue) {
         super(accessTokenValue);
     }
 
-    public OpenIdToken(OAuth2AccessToken accessToken) {
+    public CompositeAccessToken(OAuth2AccessToken accessToken) {
         super(accessToken);
     }
 
@@ -71,8 +75,8 @@ public class OpenIdToken extends DefaultOAuth2AccessToken {
             jgen.writeStartObject();
             jgen.writeStringField(OAuth2AccessToken.ACCESS_TOKEN, token.getValue());
             jgen.writeStringField(OAuth2AccessToken.TOKEN_TYPE, token.getTokenType());
-            if (token instanceof OpenIdToken && ((OpenIdToken)token).getIdTokenValue()!=null) {
-                jgen.writeStringField(ID_TOKEN, ((OpenIdToken) token).getIdTokenValue());
+            if (token instanceof CompositeAccessToken && ((CompositeAccessToken)token).getIdTokenValue()!=null) {
+                jgen.writeStringField(ID_TOKEN, ((CompositeAccessToken) token).getIdTokenValue());
             }
             OAuth2RefreshToken refreshToken = token.getRefreshToken();
             if (refreshToken != null) {
@@ -146,7 +150,7 @@ public class OpenIdToken extends DefaultOAuth2AccessToken {
 
             // TODO What should occur if a required parameter (tokenValue or tokenType) is missing?
 
-            OpenIdToken accessToken = new OpenIdToken(tokenValue);
+            CompositeAccessToken accessToken = new CompositeAccessToken(tokenValue);
             accessToken.setIdTokenValue(idTokenValue);
             accessToken.setTokenType(tokenType);
             if (expiresIn != null) {
