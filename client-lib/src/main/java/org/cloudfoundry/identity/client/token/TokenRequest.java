@@ -26,7 +26,7 @@ public class TokenRequest {
     private URI tokenEndpoint;
     private URI authorizationEndpoint;
 
-    public TokenRequest(URI tokenEndpoint) {
+    public TokenRequest(URI tokenEndpoint, URI authorizationEndpoint) {
         this.tokenEndpoint = tokenEndpoint;
     }
 

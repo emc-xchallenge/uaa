@@ -62,6 +62,7 @@ dependencies {
 
   testCompile identityPayload.configurations.testCompile.dependencies
   testCompile identityPayload.sourceSets.test.output
+  testCompile group: 'junit', name: 'junit', version:parent.junitVersion
 
   testCompile group: 'org.springframework', name: 'spring-test', version:parent.springVersion
   testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.3'
