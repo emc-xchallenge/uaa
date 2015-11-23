@@ -12,21 +12,23 @@
  * *****************************************************************************
  */
 
-package org.cloudfoundry.identity.client.token;
+package org.cloudfoundry.identity.client;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.cloudfoundry.identity.client.token.TokenRequest;
+import org.cloudfoundry.identity.uaa.oauth.token.CompositeAccessToken;
+import org.springframework.web.client.RestTemplate;
+
+public interface UaaContext {
+
+    boolean hasAccessToken();
+    boolean hasIdToken();
+    boolean hasRefreshToken();
+
+    CompositeAccessToken getToken();
+
+    TokenRequest getTokenRequest();
+
+    RestTemplate getRestTemplate();
 
 
-public class TokenRequestTest {
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @Test
-    public void testIsValid() throws Exception {
-
-    }
 }

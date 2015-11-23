@@ -309,6 +309,7 @@ project.gradle.taskGraph.whenReady { TaskExecutionGraph graph ->
 apply plugin: 'coveralls'
 
 Project identityPayload = subprojects.find { it.name.equals('cloudfoundry-identity-payload') }
+Project identityClientLib = subprojects.find { it.name.equals('cloudfoundry-identity-client-lib') }
 Project identityCommon = subprojects.find { it.name.equals('cloudfoundry-identity-common') }
 Project identityScim = subprojects.find { it.name.equals('cloudfoundry-identity-scim') }
 Project identityLogin = subprojects.find { it.name.equals('cloudfoundry-identity-login') }
@@ -318,12 +319,15 @@ cobertura {
   coverageFormats = ['xml', 'html']
   coverageSourceDirs = [
     identityPayload.sourceSets.main.java.srcDirs,
+    identityClientLib.sourceSets.main.java.srcDirs,
     identityCommon.sourceSets.main.java.srcDirs,
     identityScim.sourceSets.main.java.srcDirs,
     identityLogin.sourceSets.main.java.srcDirs,
     identityUaa.sourceSets.main.java.srcDirs
   ]
   coverageMergeDatafiles = [
+    new File("payload/build/cobertura/cobertura.ser"),
+    new File("client-lib/build/cobertura/cobertura.ser"),
     new File("common/build/cobertura/cobertura.ser"),
     new File("scim/build/cobertura/cobertura.ser"),
     new File("login/build/cobertura/cobertura.ser"),

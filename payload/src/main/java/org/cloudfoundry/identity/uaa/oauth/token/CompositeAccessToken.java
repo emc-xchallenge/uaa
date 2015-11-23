@@ -1,15 +1,16 @@
-/*******************************************************************************
- *     Cloud Foundry
- *     Copyright (c) [2009-2014] Pivotal Software, Inc. All Rights Reserved.
+/*
+ * *****************************************************************************
+ *      Cloud Foundry
+ *      Copyright (c) [2009-2015] Pivotal Software, Inc. All Rights Reserved.
+ *      This product is licensed to you under the Apache License, Version 2.0 (the "License").
+ *      You may not use this product except in compliance with the License.
  *
- *     This product is licensed to you under the Apache License, Version 2.0 (the "License").
- *     You may not use this product except in compliance with the License.
- *
- *     This product includes a number of subcomponents with
- *     separate copyright notices and license terms. Your use of these
- *     subcomponents is subject to the terms and conditions of the
- *     subcomponent's license, as noted in the LICENSE file.
- *******************************************************************************/
+ *      This product includes a number of subcomponents with
+ *      separate copyright notices and license terms. Your use of these
+ *      subcomponents is subject to the terms and conditions of the
+ *      subcomponent's license, as noted in the LICENSE file.
+ * *****************************************************************************
+ */
 package org.cloudfoundry.identity.uaa.oauth.token;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -39,8 +40,8 @@ import java.util.Set;
  * Token object that holds several related jwt tokens at once.
  * Access token, refresh token, id_token as well as expires_in and the list of scopes.
  */
-@JsonSerialize(using = CompositeAccessToken.OpenIdTokenJackson1Serializer.class)
-@JsonDeserialize(using = CompositeAccessToken.OpenIdTokenJackson1Deserializer.class)
+@JsonSerialize(using = CompositeAccessToken.CompositeAccessTokenJackson1Serializer.class)
+@JsonDeserialize(using = CompositeAccessToken.CompositeAccessJackson1Deserializer.class)
 public class CompositeAccessToken extends DefaultOAuth2AccessToken {
 
     public static String ID_TOKEN = "id_token";
@@ -63,9 +64,9 @@ public class CompositeAccessToken extends DefaultOAuth2AccessToken {
         super(accessToken);
     }
 
-    public static final class OpenIdTokenJackson1Serializer extends StdSerializer<OAuth2AccessToken> {
+    public static final class CompositeAccessTokenJackson1Serializer extends StdSerializer<OAuth2AccessToken> {
 
-        public OpenIdTokenJackson1Serializer() {
+        public CompositeAccessTokenJackson1Serializer() {
             super(OAuth2AccessToken.class);
         }
 
@@ -105,9 +106,9 @@ public class CompositeAccessToken extends DefaultOAuth2AccessToken {
         }
     }
 
-    public final class OpenIdTokenJackson1Deserializer extends StdDeserializer<OAuth2AccessToken> {
+    public final class CompositeAccessJackson1Deserializer extends StdDeserializer<OAuth2AccessToken> {
 
-        public OpenIdTokenJackson1Deserializer() {
+        public CompositeAccessJackson1Deserializer() {
             super(OAuth2AccessToken.class);
         }
 

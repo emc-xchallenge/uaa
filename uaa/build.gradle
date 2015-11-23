@@ -1,4 +1,4 @@
-Project identityPayload = parent.subprojects.find { it.name.equals('cloudfoundry-identity-common') }
+Project identityPayload = parent.subprojects.find { it.name.equals('cloudfoundry-identity-payload') }
 Project identityCommon = parent.subprojects.find { it.name.equals('cloudfoundry-identity-common') }
 Project identityScim = parent.subprojects.find { it.name.equals('cloudfoundry-identity-scim') }
 Project identityLogin = parent.subprojects.find { it.name.equals('cloudfoundry-identity-login') }
@@ -45,6 +45,8 @@ dependencies {
   runtime group: 'javax.servlet', name: 'jstl', version:'1.2'
   runtime group: 'postgresql', name: 'postgresql', version:parent.postgresqlVersion
 
+  testCompile identityPayload.configurations.testCompile.dependencies
+  testCompile identityPayload.sourceSets.test.output
   testCompile identityCommon.configurations.testCompile.dependencies
   testCompile identityCommon.sourceSets.test.output
   testCompile identityScim.sourceSets.test.output
