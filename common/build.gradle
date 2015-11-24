@@ -54,8 +54,8 @@ dependencies {
 
   provided group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
 
-  testCompile identityPayload.configurations.testCompile.dependencies
-  testCompile identityPayload.sourceSets.test.output
+  testCompile identityModels.configurations.testCompile.dependencies
+  testCompile identityModels.sourceSets.test.output
   testCompile group: 'junit', name: 'junit', version:parent.junitVersion
 
   testCompile group: 'org.springframework', name: 'spring-test', version:parent.springVersion

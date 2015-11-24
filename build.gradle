@@ -327,7 +327,7 @@ cobertura {
     identityUaa.sourceSets.main.java.srcDirs
   ]
   coverageMergeDatafiles = [
-    new File("payload/build/cobertura/cobertura.ser"),
+    new File("models/build/cobertura/cobertura.ser"),
     new File("client-lib/build/cobertura/cobertura.ser"),
     new File("common/build/cobertura/cobertura.ser"),
     new File("scim/build/cobertura/cobertura.ser"),
